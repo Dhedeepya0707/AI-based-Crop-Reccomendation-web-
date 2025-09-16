@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kisan Sathi - Disease Check</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --primary-light: #4caf50;
+      --primary-dark: #1b5e20;
+      --accent: #ff6b00;
+      --accent-light: #ff8f33;
+      --text: #212121;
+      --text-light: #757575;
+      --background: #f8fdf8;
+      --card-bg: #ffffff;
+      --gradient: linear-gradient(135deg, #2e7d32 0%, #43a047 100%);
+      --shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background-color: var(--background);
+      line-height: 1.6;
+    }
+
+    /* Header Styles */
+    header {
+      background: var(--gradient);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo i {
+      font-size: 2rem;
+    }
+
+    .logo h2 {
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-size: 2.2rem;
+    }
+
+    /* Upload Section */
+    .upload-section {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .upload-title {
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .upload-area {
+      border: 2px dashed var(--primary-light);
+      border-radius: 12px;
+      padding: 2.5rem;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+      background-color: #f1f8e9;
+    }
+
+    .upload-area:hover {
+      border-color: var(--accent);
+      background-color: #e8f5e9;
+    }
+
+    .upload-icon {
+      font-size: 3.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .upload-text {
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--accent);
+      color: white;
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-light);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Results Section */
+    .results {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      display: none;
+    }
+
+    .results-title {
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .results-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .disease-info {
+      background-color: #f1f8e9;
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .disease-name {
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-item {
+      background-color: #e8f5e9;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .info-item h4 {
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .treatment {
+      background-color: #fff8e1;
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .treatment h3 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Common Diseases */
+    .diseases {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    .diseases-title {
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .diseases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .disease-card {
+      background-color: #f1f8e9;
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .disease-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .disease-card h3 {
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Prevention Tips */
+    .prevention {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    .prevention-title {
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .prevention-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .prevention-card {
+      background-color: #e8f5e9;
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .prevention-card i {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-top: 0.25rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--gradient);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-light);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 1rem;
+      }
+      
+      nav {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .results-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .page-title {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .upload-area {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <div class="logo">
+      <i class="fas fa-leaf"></i>
+      <h2>Kisan Sathi</h2>
+    </div>
+    <nav>
+      <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+      <a href="soil-crop.html"><i class="fas fa-seedling"></i> Soil & Crop</a>
+      <a href="disease.html" class="active"><i class="fas fa-bug"></i> Disease</a>
+      <a href="market.html"><i class="fas fa-rupee-sign"></i> Market</a>
+      <a href="weather.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+      <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="index.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title"><i class="fas fa-virus"></i> Crop Disease Detection</h1>
+    
+    <!-- Upload Section -->
+    <section class="upload-section">
+      <h2 class="upload-title"><i class="fas fa-cloud-upload-alt"></i> Upload Crop Image</h2>
+      
+      <div class="upload-area" id="uploadArea">
+        <i class="fas fa-file-upload upload-icon"></i>
+        <p class="upload-text">Click to upload or drag and drop</p>
+        <p>JPG, PNG or WEBP (Max. 5MB)</p>
+        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+      </div>
+      
+      <button class="btn" id="analyzeBtn"><i class="fas fa-search"></i> Analyze Image</button>
+    </section>
+    
+    <!-- Results Section -->
+    <section class="results" id="resultsSection">
+      <h2 class="results-title"><i class="fas fa-diagnoses"></i> Analysis Results</h2>
+      
+      <div class="results-content">
+        <div class="disease-info">
+          <h3 class="disease-name"><i class="fas fa-bug"></i> Leaf Blight</h3>
+          <p>Confidence: <strong>92%</strong></p>
+          
+          <div class="info-grid">
+            <div class="info-item">
+              <h4><i class="fas fa-info-circle"></i> About</h4>
+              <p>Fungal disease affecting leaves, stems and fruits</p>
+            </div>
+            
+            <div class="info-item">
+              <h4><i class="fas fa-exclamation-triangle"></i> Symptoms</h4>
+              <p>Brown spots with yellow halos on leaves</p>
+            </div>
+            
+            <div class="info-item">
+              <h4><i class="fas fa-cloud-rain"></i> Conditions</h4>
+              <p>Thrives in warm, humid weather</p>
+            </div>
+            
+            <div class="info-item">
+              <h4><i class="fas fa-seedling"></i> Affected Crops</h4>
+              <p>Tomato, Potato, Rice, Corn</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="treatment">
+          <h3><i class="fas fa-first-aid"></i> Recommended Treatment</h3>
+          
+          <h4><i class="fas fa-spray-can"></i> Organic Solutions</h4>
+          <ul>
+            <li>Neem oil spray every 7-10 days</li>
+            <li>Baking soda solution (1 tbsp per gallon of water)</li>
+            <li>Copper-based fungicides</li>
+          </ul>
+          
+          <h4><i class="fas fa-clipboard-list"></i> Cultural Practices</h4>
+          <ul>
+            <li>Remove and destroy infected plant parts</li>
+            <li>Improve air circulation</li>
+            <li>Avoid overhead watering</li>
+            <li>Practice crop rotation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Common Diseases -->
+    <section class="diseases">
+      <h2 class="diseases-title"><i class="fas fa-list"></i> Common Crop Diseases</h2>
+      
+      <div class="diseases-grid">
+        <div class="disease-card">
+          <h3><i class="fas fa-leaf"></i> Powdery Mildew</h3>
+          <p>White powdery spots on leaves and stems</p>
+          <p><strong>Treatment:</strong> Sulfur sprays, potassium bicarbonate</p>
+        </div>
+        
+        <div class="disease-card">
+          <h3><i class="fas fa-leaf"></i> Root Rot</h3>
+          <p>Wilting, yellowing leaves, dark rotten roots</p>
+          <p><strong>Treatment:</strong> Improve drainage, fungicide drench</p>
+        </div>
+        
+        <div class="disease-card">
+          <h3><i class="fas fa-leaf"></i> Rust</h3>
+          <p>Orange-brown pustules on leaf undersides</p>
+          <p><strong>Treatment:</strong> Remove infected leaves, fungicides</p>
+        </div>
+        
+        <div class="disease-card">
+          <h3><i class="fas fa-leaf"></i> Bacterial Spot</h3>
+          <p>Water-soaked lesions that turn brown</p>
+          <p><strong>Treatment:</strong> Copper-based sprays, resistant varieties</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Prevention Tips -->
+    <section class="prevention">
+      <h2 class="prevention-title"><i class="fas fa-shield-alt"></i> Disease Prevention Tips</h2>
+      
+      <div class="prevention-grid">
+        <div class="prevention-card">
+          <i class="fas fa-check-circle"></i>
+          <div>
+            <h3>Choose Resistant Varieties</h3>
+            <p>Select crop varieties that are resistant to common diseases in your area.</p>
+          </div>
+        </div>
+        
+        <div class="prevention-card">
+          <i class="fas fa-tint"></i>
+          <div>
+            <h3>Proper Watering</h3>
+            <p>Water at the base of plants to keep foliage dry and prevent fungal growth.</p>
+          </div>
+        </div>
+        
+        <div class="prevention-card">
+          <i class="fas fa-wind"></i>
+          <div>
+            <h3>Good Air Circulation</h3>
+            <p>Space plants appropriately to allow air movement and reduce humidity.</p>
+          </div>
+        </div>
+        
+        <div class="prevention-card">
+          <i class="fas fa-recycle"></i>
+          <div>
+            <h3>Crop Rotation</h3>
+            <p>Rotate crops annually to prevent disease buildup in soil.</p>
+          </div>
+        </div>
+        
+        <div class="prevention-card">
+          <i class="fas fa-hand-sparkles"></i>
+          <div>
+            <h3>Sanitation</h3>
+            <p>Clean tools and remove plant debris to eliminate disease sources.</p>
+          </div>
+        </div>
+        
+        <div class="prevention-card">
+          <i class="fas fa-search"></i>
+          <div>
+            <h3>Regular Monitoring</h3>
+            <p>Inspect plants regularly for early signs of disease.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+      <a href="soil-crop.html"><i class="fas fa-seedling"></i> Soil & Crop</a>
+      <a href="disease.html"><i class="fas fa-bug"></i> Disease</a>
+      <a href="market.html"><i class="fas fa-rupee-sign"></i> Market</a>
+      <a href="weather.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+      <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="index.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </div>
+    <p><i class="fas fa-copyright"></i> 2025 Kisan Sathi | Empowering Farmers with AI</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const uploadArea = document.getElementById('uploadArea');
+      const fileInput = document.getElementById('fileInput');
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      const resultsSection = document.getElementById('resultsSection');
+      
+      // Upload area click handler
+      uploadArea.addEventListener('click', function() {
+        fileInput.click();
+      });
+      
+      // Drag and drop functionality
+      uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadArea.style.borderColor = var(--accent);
+        uploadArea.style.backgroundColor = '#e8f5e9';
+      });
+      
+      uploadArea.addEventListener('dragleave', function() {
+        uploadArea.style.borderColor = var(--primary-light);
+        uploadArea.style.backgroundColor = '#f1f8e9';
+      });
+      
+      uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadArea.style.borderColor = var(--primary-light);
+        uploadArea.style.backgroundColor = '#f1f8e9';
+        
+        if (e.dataTransfer.files.length) {
+          fileInput.files = e.dataTransfer.files;
+          alert('File selected: ' + e.dataTransfer.files[0].name);
+        }
+      });
+      
+      // Analyze button click handler
+      analyzeBtn.addEventListener('click', function() {
+        if (!fileInput.files.length) {
+          alert('Please select an image first');
+          return;
+        }
+        
+        // Show loading state
+        analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+        analyzeBtn.disabled = true;
+        
+        // Simulate analysis delay
+        setTimeout(function() {
+          // Show results
+          resultsSection.style.display = 'block';
+          
+          // Reset button
+          analyzeBtn.innerHTML = '<i class="fas fa-search"></i> Analyze Image';
+          analyzeBtn.disabled = false;
+          
+          // Scroll to results
+          resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>

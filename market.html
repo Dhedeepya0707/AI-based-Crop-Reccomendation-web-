@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kisan Sathi - Market Prices</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --primary-light: #4caf50;
+      --primary-dark: #1b5e20;
+      --accent: #ff6b00;
+      --accent-light: #ff8f33;
+      --text: #212121;
+      --text-light: #757575;
+      --background: #f8fdf8;
+      --card-bg: #ffffff;
+      --gradient: linear-gradient(135deg, #2e7d32 0%, #43a047 100%);
+      --shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background-color: var(--background);
+      line-height: 1.6;
+    }
+
+    /* Header Styles */
+    header {
+      background: var(--gradient);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo i {
+      font-size: 2rem;
+    }
+
+    .logo h2 {
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-size: 2.2rem;
+    }
+
+    /* Filter Section */
+    .filters {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .filter-group label {
+      font-weight: 500;
+      color: var(--primary-dark);
+    }
+
+    .filter-group select,
+    .filter-group input {
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--accent);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-light);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Market Table */
+    .market-table {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      overflow-x: auto;
+    }
+
+    .market-table h2 {
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #f1f8e9;
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .trend-up {
+      color: #4caf50;
+      font-weight: 500;
+    }
+
+    .trend-down {
+      color: #f44336;
+      font-weight: 500;
+    }
+
+    .trend-stable {
+      color: #ff9800;
+      font-weight: 500;
+    }
+
+    /* Price Alerts */
+    .alerts {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    .alerts h2 {
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .alert-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      color: var(--primary-dark);
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Market Insights */
+    .insights {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    .insights h2 {
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .insight-card {
+      background-color: #f1f8e9;
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .insight-card h3 {
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--gradient);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-light);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 1rem;
+      }
+      
+      nav {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .page-title {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      th, td {
+        padding: 0.75rem 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <div class="logo">
+      <i class="fas fa-leaf"></i>
+      <h2>Kisan Sathi</h2>
+    </div>
+    <nav>
+      <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+      <a href="soil-crop.html"><i class="fas fa-seedling"></i> Soil & Crop</a>
+      <a href="disease.html"><i class="fas fa-bug"></i> Disease</a>
+      <a href="market.html" class="active"><i class="fas fa-rupee-sign"></i> Market</a>
+      <a href="weather.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+      <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="index.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title"><i class="fas fa-rupee-sign"></i> Market Prices</h1>
+    
+    <!-- Filter Section -->
+    <section class="filters">
+      <div class="filter-group">
+        <label for="state"><i class="fas fa-map-marker-alt"></i> State</label>
+        <select id="state">
+          <option value="">All States</option>
+          <option value="up">Uttar Pradesh</option>
+          <option value="mh">Maharashtra</option>
+          <option value="pb">Punjab</option>
+          <option value="ap">Andhra Pradesh</option>
+          <option value="tn">Tamil Nadu</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="crop"><i class="fas fa-seedling"></i> Crop</label>
+        <select id="crop">
+          <option value="">All Crops</option>
+          <option value="wheat">Wheat</option>
+          <option value="rice">Rice</option>
+          <option value="cotton">Cotton</option>
+          <option value="sugarcane">Sugarcane</option>
+          <option value="corn">Corn</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="date"><i class="fas fa-calendar-alt"></i> Date</label>
+        <input type="date" id="date">
+      </div>
+      
+      <button class="btn"><i class="fas fa-filter"></i> Apply Filters</button>
+    </section>
+    
+    <!-- Market Table -->
+    <section class="market-table">
+      <h2><i class="fas fa-table"></i> Current Market Prices</h2>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Crop</th>
+            <th>Variety</th>
+            <th>Market</th>
+            <th>Price (₹/Quintal)</th>
+            <th>Trend</th>
+            <th>Last Updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><i class="fas fa-bread-slice"></i> Wheat</td>
+            <td>Sharbati</td>
+            <td>Delhi</td>
+            <td>₹2,100</td>
+            <td class="trend-up"><i class="fas fa-arrow-up"></i> Rising</td>
+            <td>Today</td>
+          </tr>
+          <tr>
+            <td><i class="fas fa-rice"></i> Rice</td>
+            <td>Basmati</td>
+            <td>Punjab</td>
+            <td>₹2,800</td>
+            <td class="trend-stable"><i class="fas fa-minus"></i> Stable</td>
+            <td>Today</td>
+          </tr>
+          <tr>
+            <td><i class="fas fa-shirt"></i> Cotton</td>
+            <td>Long Staple</td>
+            <td>Gujarat</td>
+            <td>₹6,200</td>
+            <td class="trend-down"><i class="fas fa-arrow-down"></i> Falling</td>
+            <td>Today</td>
+          </tr>
+          <tr>
+            <td><i class="fas fa-candy-cane"></i> Sugarcane</td>
+            <td>Co-86032</td>
+            <td>Maharashtra</td>
+            <td>₹3,400</td>
+            <td class="trend-up"><i class="fas fa-arrow-up"></i> Rising</td>
+            <td>Yesterday</td>
+          </tr>
+          <tr>
+            <td><i class="fas fa-seedling"></i> Corn</td>
+            <td>Hybrid</td>
+            <td>Karnataka</td>
+            <td>₹1,700</td>
+            <td class="trend-stable"><i class="fas fa-minus"></i> Stable</td>
+            <td>Yesterday</td>
+          </tr>
+          <tr>
+            <td><i class="fas fa-leaf"></i> Soybean</td>
+            <td>JS-335</td>
+            <td>Madhya Pradesh</td>
+            <td>₹4,500</td>
+            <td class="trend-up"><i class="fas fa-arrow-up"></i> Rising</td>
+            <td>2 days ago</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <!-- Price Alerts -->
+    <section class="alerts">
+      <h2><i class="fas fa-bell"></i> Price Alerts</h2>
+      
+      <div class="alert-form">
+        <div class="form-group">
+          <label for="alert-crop"><i class="fas fa-seedling"></i> Crop</label>
+          <select id="alert-crop">
+            <option value="wheat">Wheat</option>
+            <option value="rice">Rice</option>
+            <option value="cotton">Cotton</option>
+            <option value="sugarcane">Sugarcane</option>
+            <option value="corn">Corn</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="alert-price"><i class="fas fa-rupee-sign"></i> Target Price (₹)</label>
+          <input type="number" id="alert-price" placeholder="Enter target price">
+        </div>
+        
+        <div class="form-group">
+          <label for="alert-type"><i class="fas fa-chart-line"></i> Alert Type</label>
+          <select id="alert-type">
+            <option value="above">Price goes above</option>
+            <option value="below">Price goes below</option>
+          </select>
+        </div>
+        
+        <button class="btn" style="align-self: end;"><i class="fas fa-plus"></i> Set Alert</button>
+      </div>
+    </section>
+    
+    <!-- Market Insights -->
+    <section class="insights">
+      <h2><i class="fas fa-chart-line"></i> Market Insights</h2>
+      
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h3><i class="fas fa-arrow-up"></i> Wheat Prices Rising</h3>
+          <p>Wheat prices have increased by 8% in the last month due to high demand from northern states and lower production estimates.</p>
+        </div>
+        
+        <div class="insight-card">
+          <h3><i class="fas fa-arrow-down"></i> Cotton Prices Falling</h3>
+          <p>Cotton prices are declining due to increased imports and higher inventory levels. Expected to stabilize in the coming weeks.</p>
+        </div>
+        
+        <div class="insight-card">
+          <h3><i class="fas fa-info-circle"></i> Government Procurement</h3>
+          <p>Government has increased MSP for wheat and rice by 5% for the upcoming season. Farmers advised to plan accordingly.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+      <a href="soil-crop.html"><i class="fas fa-seedling"></i> Soil & Crop</a>
+      <a href="disease.html"><i class="fas fa-bug"></i> Disease</a>
+      <a href="market.html"><i class="fas fa-rupee-sign"></i> Market</a>
+      <a href="weather.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+      <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="index.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </div>
+    <p><i class="fas fa-copyright"></i> 2025 Kisan Sathi | Empowering Farmers with AI</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set today's date as default
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('date').value = today;
+      
+      // Simulate live price updates
+      setInterval(function() {
+        const prices = document.querySelectorAll('tbody tr');
+        prices.forEach(row => {
+          const cells = row.cells;
+          const priceCell = cells[3];
+          const trendCell = cells[4];
+          const dateCell = cells[5];
+          
+          // Random small price fluctuation
+          if (Math.random() > 0.7) {
+            const currentPrice = parseInt(priceCell.textContent.replace(/[^0-9]/g, ''));
+            const change = Math.floor(Math.random() * 50) - 25; // -25 to +25
+            const newPrice = Math.max(1000, currentPrice + change);
+            
+            priceCell.textContent = `₹${newPrice.toLocaleString('en-IN')}`;
+            
+            // Update trend
+            if (change > 0) {
+              trendCell.innerHTML = '<i class="fas fa-arrow-up"></i> Rising';
+              trendCell.className = 'trend-up';
+            } else if (change < 0) {
+              trendCell.innerHTML = '<i class="fas fa-arrow-down"></i> Falling';
+              trendCell.className = 'trend-down';
+            } else {
+              trendCell.innerHTML = '<i class="fas fa-minus"></i> Stable';
+              trendCell.className = 'trend-stable';
+            }
+            
+            // Update timestamp
+            dateCell.textContent = 'Just now';
+            
+            // Reset after a while
+            setTimeout(() => {
+              dateCell.textContent = 'Today';
+            }, 5000);
+          }
+        });
+      }, 10000);
+    });
+  </script>
+</body>
+</html>
