@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kisan Sathi - Dashboard</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --primary-light: #4caf50;
+      --primary-dark: #1b5e20;
+      --accent: #ff6b00;
+      --accent-light: #ff8f33;
+      --text: #212121;
+      --text-light: #757575;
+      --background: #f8fdf8;
+      --card-bg: #ffffff;
+      --gradient: linear-gradient(135deg, #2e7d32 0%, #43a047 100%);
+      --shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background-color: var(--background);
+      line-height: 1.6;
+    }
+
+    /* Header Styles */
+    header {
+      background: var(--gradient);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo i {
+      font-size: 2rem;
+    }
+
+    .logo h2 {
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Hero Section */
+    .hero-main {
+      background-image: url(farmimg.png);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      background-attachment: fixed;
+      background-color: #cccccc;  
+      color: white;
+      text-align: center;
+      padding: 7rem 2rem;
+      position: relative;
+    }
+
+    .hero-main h1 {
+      font-size: 3.2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .tagline {
+      font-size: 1.6rem;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--accent);
+      color: white;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      font-size: 1.1rem;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-light);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 1rem;
+    }
+
+    .container h2 {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--primary-dark);
+      font-size: 2.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    /* Team Section */
+    .team {
+      padding: 4rem 0;
+      background: linear-gradient(to bottom, #f1f8e9, #ffffff);
+    }
+
+    .team-intro {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .team-member {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .team-member:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .member-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 1.5rem;
+      border: 4px solid var(--primary-light);
+      background-color: #e8f5e9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: var(--primary);
+    }
+
+    .member-name {
+      font-size: 1.4rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .member-role {
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .member-desc {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .member-social {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .member-social a {
+      color: var(--primary);
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+
+    .member-social a:hover {
+      color: var(--accent);
+    }
+
+    /* Features Section */
+    .features {
+      background: var(--gradient);
+      padding: 5rem 2rem;
+      color: white;
+    }
+
+    .features h2 {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background-color: rgba(255, 255, 255, 0.12);
+      padding: 2.5rem 2rem;
+      border-radius: 12px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      background-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .feature-card i {
+      font-size: 3.2rem;
+      margin-bottom: 1.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    /* About Section */
+    .about {
+      padding: 5rem 2rem;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .about h2 {
+      margin-bottom: 2rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .about p {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--gradient);
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-light);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 1rem;
+      }
+      
+      nav {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .hero-main h1 {
+        font-size: 2.4rem;
+      }
+      
+      .tagline {
+        font-size: 1.3rem;
+      }
+      
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .container h2, .features h2, .about h2 {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <div class="logo">
+      <i class="fas fa-leaf"></i>
+      <h2>Kisan Sathi</h2>
+    </div>
+    <nav>
+      <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+      <a href="soil-crop.html"><i class="fas fa-seedling"></i> Soil & Crop</a>
+      <a href="disease.html"><i class="fas fa-bug"></i> Disease</a>
+      <a href="market.html"><i class="fas fa-rupee-sign"></i> Market</a>
+      <a href="weather.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+      <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="index.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-main">
+    <h1>Welcome to Kisan Sathi <i class="fas fa-leaf"></i></h1>
+    <p class="tagline">The village's soil, with AI's thinking</p>
+    <a href="#about" class="btn"><i class="fas fa-info-circle"></i> Learn More</a>
+  </section>
+ <!-- About Section -->
+  <section id="about" class="about">
+    <h2><i class="fas fa-info-circle"></i> About Us</h2>
+    <p>
+      Kisan Sathi is your trusted farming companion.  
+      We combine the wisdom of farmers with the power of AI to help in better soil management,  
+      crop selection, disease detection, weather forecasting, and market insights.  
+    </p>
+    <p>
+      Our goal is to empower every farmer with modern technology, in simple and local languages.
+      We believe that by bridging the gap between traditional farming knowledge and cutting-edge
+      technology, we can help increase agricultural productivity and sustainability.
+    </p>
+    <p>
+      The Kisan Sathi project started as a collaborative effort between students from different
+      engineering disciplines who shared a common vision of making agriculture more profitable
+      and sustainable for farmers across India.
+    </p>
+  </section>
+  <!-- Features Section -->
+  <section class="features">
+    <h2><i class="fas fa-hands-helping"></i> How Kisan Sathi Helps Farmers</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fas fa-microscope"></i>
+        <h3>Soil Analysis</h3>
+        <p>Get detailed analysis of your soil health and recommendations for improvement.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-robot"></i>
+        <h3>AI-Powered Insights</h3>
+        <p>Our AI algorithms provide personalized crop recommendations based on your soil and location.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-chart-line"></i>
+        <h3>Market Trends</h3>
+        <p>Stay updated with real-time market prices and trends to maximize your profits.</p>
+      </div>
+    </div>
+  </section>
+  <!-- Team Section -->
+  <section class="team">
+    <div class="container">
+      <h2><i class="fas fa-users"></i> Our Team</h2>
+      <p class="team-intro">
+        We are a passionate team of engineering students who came together to create Kisan Sathi - 
+        a platform dedicated to empowering farmers with technology. Our diverse backgrounds in 
+        Computer Science, Artificial Intelligence, and Electronics allow us to approach agricultural 
+        challenges from multiple perspectives.
+      </p>
+      
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-img">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3 class="member-name">Manikanta</h3>
+          <p class="member-role">ELC Department</p>
+          <p class="member-desc">Hardware specialist working on IoT sensors for soil monitoring and data collection.</p>
+          <div class="member-social">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-img">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3 class="member-name">Siva Srivaastav</h3>
+          <p class="member-role">ELC Department</p>
+          <p class="member-desc">Embedded systems engineer developing hardware solutions for agricultural automation.</p>
+          <div class="member-social">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-img">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3 class="member-name">Dheeraj</h3>
+          <p class="member-role">AI Department</p>
+          <p class="member-desc">Machine learning engineer focused on developing predictive models for crop recommendations.</p>
+          <div class="member-social">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-img">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3 class="member-name">Dhedeepya</h3>
+          <p class="member-role">CSE Batch</p>
+          <p class="member-desc">Frontend developer with expertise in UI/UX design and user experience optimization.</p>
+          <div class="member-social">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-img">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3 class="member-name">Manideepika</h3>
+          <p class="member-role">CSE Batch</p>
+          <p class="member-desc">Backend developer specializing in database architecture and server management.</p>
+          <div class="member-social">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-img">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3 class="member-name">Aryan</h3>
+          <p class="member-role">Electronics Batch</p>
+          <p class="member-desc">Data acquisition specialist working on sensor integration and signal processing.</p>
+          <div class="member-social">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+      <a href="soil-crop.html"><i class="fas fa-seedling"></i> Soil & Crop</a>
+      <a href="disease.html"><i class="fas fa-bug"></i> Disease</a>
+      <a href="market.html"><i class="fas fa-rupee-sign"></i> Market</a>
+      <a href="weather.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+      <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="index.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </div>
+    <p><i class="fas fa-copyright"></i> 2025 Kisan Sathi | Empowering Farmers with AI</p>
+  </footer>
+</body>
+</html>
